@@ -3,6 +3,7 @@
 
 # Usage
 - Create `.pre-commit-config.yaml` in the root of your repo. For example   
+
   ```yaml
   - repo: git://github.com/pre-commit/pre-commit-hooks
     sha: master  # Use the ref you want to point at
