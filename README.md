@@ -21,7 +21,7 @@
   cd $(git rev-parse --show-toplevel)
 
   NAME=$(basename `git rev-parse --show-toplevel`)_precommit
-  docker ps -a | grep nucleus_precommit &> /dev/null
+  docker ps -a | grep $NAME &> /dev/null
   CONTAINER_EXISTS=$?
 
   if [[ CONTAINER_EXISTS -eq 0 ]]; then
