@@ -1,11 +1,22 @@
-cd $(git rev-parse --show-toplevel)
+#!/bin/sh
+toplevel="`git rev-parse --show-toplevel`"
+cd "$toplevel"
 
-NAME=$(basename `git rev-parse --show-toplevel`)_precommit
-docker ps -a | grep nucleus_precommit &> /dev/null
+NAME="`basename "$toplevel"`_precommit"
+
+if command -v podman > /dev/null 2>&1; then
+    container_exec=podman
+elif command -v docker > /dev/null 2>&1; then
+    container_exec=docker
+else
+    echo "No container executable found! Looked for \`podman' and \`docker'."
+    exit 1
+fi
+test -n "`"$container_exec" ps -a -q --no-trunc --filter 'name=^/?'"$NAME"'$'`"
 CONTAINER_EXISTS=$?
 
-if [[ CONTAINER_EXISTS -eq 0 ]]; then
-    docker restart $NAME && docker attach --no-stdin $NAME
+if [ "$CONTAINER_EXISTS" -eq 0 ]; then
+    "$container_exec" restart "$NAME" && "$container_exec" attach --no-stdin "$NAME"
 else
-    docker run -t -v $(pwd):/pre-commit --name $NAME taghash/pre-commit
+    "$container_exec" run -t -v $(pwd):/pre-commit --name "$NAME" alexs77/pre-commit
 fi
