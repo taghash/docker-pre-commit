@@ -10,11 +10,10 @@ RUN apt-get update && apt-get install -y \
       python3-pip \
       python3 \
       && rm -rf /var/lib/apt/lists/*
-      
+
 RUN git init .
 
-RUN pip3 install pre-commit==${PRE_COMMIT_VERSION} && \      
+RUN pip3 install pre-commit==${PRE_COMMIT_VERSION} && \
       pre-commit install
 
 CMD ["pre-commit", "run", "--all-files"]
-
