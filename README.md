@@ -2,7 +2,7 @@
 
 [Pre-commit](http://pre-commit.com/) is a tool created by Yelp that allows you to run pre-commit sanity checks against your repo, to do things like ensuring private keys aren't being added etc. This image packages `pre-commit` in a docker-container, so you can ship it with a setup script you might be using to setup local development environment.
 
-# Usage
+## Usage
 
 - Create `.pre-commit-config.yaml` in the root of your repo. For example
 
@@ -73,7 +73,7 @@ repos:
 - Create an empty commit to test
   ```git commit --allow-empty -m "Test pre-commit"```
 
-# Note
+## Note
 
 - If you are going to use a `pre-commit` plugin that needs dependencies not packaged in this image, you can extend this image and install the dependencies you need
 - You might need to change the command, add volumes etc, based on your needs.
